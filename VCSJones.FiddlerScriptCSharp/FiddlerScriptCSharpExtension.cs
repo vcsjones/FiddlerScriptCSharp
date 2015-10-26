@@ -27,7 +27,7 @@ namespace VCSJones.FiddlerScriptCSharp
             _scriptRepository = new ScriptCSharpRepository(CONFIG.GetPath("Scripts"));
             FiddlerApplication.FiddlerBoot += () => _scriptRepository.ExecuteAllOnBoot();
             FiddlerApplication.FiddlerShutdown += () => _scriptRepository.ExecuteAllOnShutdown();
-            FiddlerApplication.BeforeFiddlerShutdown += (_, __) => _scriptRepository.ExecuteAllOnBeforeShutdown();
+            FiddlerApplication.BeforeFiddlerShutdown += (_, cancel) => cancel.Cancel = !_scriptRepository.ExecuteAllOnBeforeShutdown();
             FiddlerApplication.FiddlerAttach += () => _scriptRepository.ExecuteAllOnAttach();
             FiddlerApplication.FiddlerDetach += () => _scriptRepository.ExecuteAllOnDetach();
         }

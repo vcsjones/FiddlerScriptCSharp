@@ -16,13 +16,13 @@ as many scripts in this directory as you would like, however they cannot be guar
 A simple example that alternates the colors of sessions in the user interface:
 
 ```csharp
-	using Fiddler;
+using Fiddler;
 
-	public void OnBeforeRequest(Session oSession)
-	{
-		oSession["ui-color"] = oSession.id % 2 == 0 ? "red" : "green";
-	}
-	FiddlerApplication.Log.LogString("Script has been initialized.");
+public void OnBeforeRequest(Session oSession)
+{
+	oSession["ui-color"] = oSession.id % 2 == 0 ? "red" : "green";
+}
+FiddlerApplication.Log.LogString("Script has been initialized.");
 ```
 
 That's all you need in the file. Unlike full C#, Roslyn scripting doesn't require a full class declaration.
@@ -31,88 +31,114 @@ That's all you need in the file. Unlike full C#, Roslyn scripting doesn't requir
 Currently the FiddlerScript C# bindings are more limited than the JScript.NET ones, however some of the major features
 have been implemented.
 
+#Namespaces and assemblies
+FiddlerScript C# automatically imports the following assemblies:
+
+* mscorlib
+* System
+* System.Core
+* Microsoft.CSharp
+* Fiddler
+
+Additional references can be supplied using the `#r` syntax. For example, at the top of your script:
+
+```csharp
+#r "System.Drawing"
+#r "System.Windows.Forms"
+using System.Windows.Forms;
+```
+
+Assemblies are searched for in the `~/Documents/Fiddler2/Scripts` directory and the installation directory
+of Fiddler.
+
+By default, the following namespaces are automatically imported:
+
+* System
+* Fiddler
+
+
 #API
 
 ##OnBeforeRequest (AutoTamperRequestBefore)
 
 ```csharp
-	//The "AutoTamperRequestBefore" name is also acceptable
-	public void OnBeforeRequest(Session session)
-	{
-		//Access the session before the client has sent the request
-	}
+//The "AutoTamperRequestBefore" name is also acceptable
+public void OnBeforeRequest(Session session)
+{
+	//Access the session before the client has sent the request
+}
 ```
 
 
 ##OnAfterRequest (AutoTamperRequestAfter)
 
 ```csharp
-    //The "AutoTamperRequestAfter" name is also acceptable
-    public void OnAfterRequest(Session session)
-    {
-    	//Access the session after the request has been sent to the server
-    }
+//The "AutoTamperRequestAfter" name is also acceptable
+public void OnAfterRequest(Session session)
+{
+	//Access the session after the request has been sent to the server
+}
 ```
 	
 ##OnBeforeResponse (AutoTamperResponseBefore)
 
 ```csharp
-    //The "AutoTamperResponseBefore" name is also acceptable
-    public void OnBeforeResponse(Session session)
-	{
-		//Access the session after the request has been sent to the server but
-		//before the client has received the response
-	}
+//The "AutoTamperResponseBefore" name is also acceptable
+public void OnBeforeResponse(Session session)
+{
+	//Access the session after the request has been sent to the server but
+	//before the client has received the response
+}
 ```
 	
 ##OnAfterResponse (AutoTamperResponseAfter)
 
 ```csharp
-    //The "AutoTamperResponseAfter" name is also acceptable
-    public void OnAfterResponse(Session session)
-	{
-		//Access the session after the client has received the response.
-	}
+//The "AutoTamperResponseAfter" name is also acceptable
+public void OnAfterResponse(Session session)
+{
+	//Access the session after the client has received the response.
+}
 ```
 	
 ##OnPeekAtRequestHeaders
 
 ```csharp
-	public void OnPeekAtRequestHeaders(Session session)
-	{
-		//Access the request headers before the request body is available
-	}
+public void OnPeekAtRequestHeaders(Session session)
+{
+	//Access the request headers before the request body is available
+}
 ```	
-	
+
 ##OnPeekAtResponseHeaders
 
 ```csharp
-	public void OnPeekAtResponseHeaders(Session session)
-	{
-		//Access the response headers before the response body is available
-	}
+public void OnPeekAtResponseHeaders(Session session)
+{
+	//Access the response headers before the response body is available
+}
 ```
-	
+
 ##OnReturningError (OnBeforeReturningError)
 
 ```csharp
-	//The "OnBeforeReturningError" name is also acceptable
-	public void OnReturningError(Session session)
-	{
-		//Occures when Fiddler itself returns an error during the request / response.
-	}
+//The "OnBeforeReturningError" name is also acceptable
+public void OnReturningError(Session session)
+{
+	//Occures when Fiddler itself returns an error during the request / response.
+}
 ```
-	
+
 
 ##OnBeforeShutdown
 
 ```csharp
-    public bool OnBeforeShutdown()
-	{
-		//Return false to prevent fiddler from closing
-	}
+public bool OnBeforeShutdown()
+{
+	//Return false to prevent fiddler from closing
+}
 ```
-	
+
 ##Handling Main()
 
 The Fiddler JScript script engine supports the `Main` function, which is called every time
@@ -120,13 +146,13 @@ the script is updated. The FiddlerScript C# extension does not support this but 
 allow free-form expressions anywhere in the file. For example:
 
 ```csharp
-	using Fiddler;
+using Fiddler;
 
-	public void OnBeforeRequest(Session oSession)
-	{
-		//Handle request
-	}
+public void OnBeforeRequest(Session oSession)
+{
+	//Handle request
+}
 
-	//#equivalent to JScript.NET Engine "main" 
-	FiddlerApplication.Log.LogString("Script has been initialized.");
+//#equivalent to JScript.NET Engine "main" 
+FiddlerApplication.Log.LogString("Script has been initialized.");
 ```

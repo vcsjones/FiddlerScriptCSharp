@@ -1,4 +1,5 @@
 ﻿using Fiddler;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.CodeAnalysis.Scripting.CSharp;
 using System;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reactive;
 using System.Reactive.Linq;
+using System.Reflection;
 
 namespace VCSJones.FiddlerScriptCSharp
 {
@@ -200,13 +202,9 @@ namespace VCSJones.FiddlerScriptCSharp
         {
             var options = ScriptOptions.Default
                             .WithIsInteractive(false)
-                            .WithReferences(
-                                typeof(IAutoTamper3).Assembly,
-                                typeof(string).Assembly,
-                                typeof(System.Dynamic.DynamicObject).Assembly,
-                                typeof(Microsoft.CSharp.RuntimeBinder.CSharpArgumentInfo).Assembly,
-                                typeof(Uri).Assembly
-                            );
+                            .AddSearchPaths(CONFIG.GetPath("App"), CONFIG.GetPath("Scripts"))
+                            .AddReferences("mscorlib.dll", "System.dll", "System.Core.dll", "Microsoft.CSharp.dll", "Fiddler.exe")
+                            .AddNamespaces("Fiddler");
             string text;
             using (var fs = new FileStream(_path, FileMode.Open, FileAccess.Read))
             {
