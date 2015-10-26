@@ -139,20 +139,10 @@ public bool OnBeforeShutdown()
 }
 ```
 
-##Handling Main()
-
-The Fiddler JScript script engine supports the `Main` function, which is called every time
-the script is updated. The FiddlerScript C# extension does not support this but it does
-allow free-form expressions anywhere in the file. For example:
+##Main
 
 ```csharp
-using Fiddler;
-
-public void OnBeforeRequest(Session oSession)
+public void Main()
 {
-	//Handle request
+	//Executed immediately after the script is loaded.
 }
-
-//#equivalent to JScript.NET Engine "main" 
-FiddlerApplication.Log.LogString("Script has been initialized.");
-```

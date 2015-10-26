@@ -224,6 +224,7 @@ namespace VCSJones.FiddlerScriptCSharp
                 FiddlerApplication.Log.LogString(e.ToString());
                 return;
             }
+            script.CreateDelegate<Action>("Main")?.Invoke();
             AutoTamperRequestBeforeDelegate = script.CreateDelegate<Action<Session>>("OnBeforeRequest") ?? script.CreateDelegate<Action<Session>>(nameof(IAutoTamper3.AutoTamperRequestBefore));
             AutoTamperRequestAfterDelegate = script.CreateDelegate<Action<Session>>("OnAfterRequest") ?? script.CreateDelegate<Action<Session>>(nameof(IAutoTamper3.AutoTamperRequestAfter));
             AutoTamperResponseBeforeDelegate = script.CreateDelegate<Action<Session>>("OnBeforeResponse") ?? script.CreateDelegate<Action<Session>>(nameof(IAutoTamper3.AutoTamperResponseBefore));
