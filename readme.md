@@ -5,6 +5,8 @@ FiddlerScript C# is an extension for Telerik Fiddler that lets you use C# for sc
 
 FiddlerScript C# is powered by Roslyn Scripting.
 
+![Screenshot](https://vcsjones.com/wp-content/uploads/Screen-Shot-2015-10-26-at-1.47.26-PM.png)
+
 #Installation
 To install, compile the project and copy the contents of the output into `~/Documents/Fiddler2/Scripts`.
 
