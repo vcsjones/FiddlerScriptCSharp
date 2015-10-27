@@ -177,6 +177,14 @@ namespace VCSJones.FiddlerScriptCSharp
             }
         }
 
+        public void ExecuteAllOnWebSocketMessage(WebSocketMessage message)
+        {
+            foreach (var script in _activeScripts.Values)
+            {
+                ExecuteSafely(() => script.OnWebSocketMessage(message));
+            }
+        }
+
         public bool ExecuteAllOnBeforeShutdown()
         {
             var continueShutDown = true;

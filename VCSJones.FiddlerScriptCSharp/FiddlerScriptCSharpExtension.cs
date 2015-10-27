@@ -31,6 +31,7 @@ namespace VCSJones.FiddlerScriptCSharp
             FiddlerApplication.FiddlerAttach += () => _scriptRepository.ExecuteAllOnAttach();
             FiddlerApplication.FiddlerDetach += () => _scriptRepository.ExecuteAllOnDetach();
             FiddlerApplication.AfterSessionComplete += session => _scriptRepository.ExecuteAllOnDone(session);
+            FiddlerApplication.OnWebSocketMessage += (_, args) => _scriptRepository.ExecuteAllOnWebSocketMessage(args.oWSM);
         }
     }
 }

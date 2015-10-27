@@ -15,6 +15,7 @@ namespace VCSJones.FiddlerScriptCSharp
         private Action OnFiddlerAttachDelegate, OnFiddlerDetachDelegate;
         private Func<bool> OnFiddlerBeforeShutdownDelegate;
         private Action OnFiddlerBootDelegate, OnFiddlerShutdownDelegate;
+        private Action<WebSocketMessage> OnWebSocketMessageDelegate;
 
         public FiddlerCSharpScript(string path)
         {
@@ -61,6 +62,7 @@ namespace VCSJones.FiddlerScriptCSharp
             OnFiddlerBootDelegate = script.CreateDelegate<Action>("OnBoot");
             OnFiddlerShutdownDelegate = script.CreateDelegate<Action>("OnShutdown");
             OnDoneDelegate = script.CreateDelegate<Action<Session>>("OnDone");
+            OnWebSocketMessageDelegate = script.CreateDelegate<Action<WebSocketMessage>>("OnWebSocketMessage");
         }
 
         public int CompareTo(FiddlerCSharpScript other) => StringComparer.OrdinalIgnoreCase.Compare(_path, other._path);
@@ -81,6 +83,7 @@ namespace VCSJones.FiddlerScriptCSharp
         public bool? OnBeforeShutdown() => OnFiddlerBeforeShutdownDelegate?.Invoke();
         public void OnAttach() => OnFiddlerAttachDelegate?.Invoke();
         public void OnDetach() => OnFiddlerDetachDelegate?.Invoke();
+        public void OnWebSocketMessage(WebSocketMessage message) => OnWebSocketMessageDelegate?.Invoke(message);
 
         public override int GetHashCode() => _path.GetHashCode();
     }
