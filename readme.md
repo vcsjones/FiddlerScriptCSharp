@@ -146,6 +146,7 @@ public void Main()
 {
 	//Executed immediately after the script is loaded.
 }
+```
 
 #Globals
 
