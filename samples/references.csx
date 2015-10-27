@@ -9,8 +9,8 @@ public bool OnBeforeShutdown()
 
 public void Main()
 {
-	FiddlerApplication.Log.LogString("Script has been initialized in Main.");
+	FiddlerObject.log("Script has been initialized in Main.");
 }
 
 //#equivalent to "Main"
-FiddlerApplication.Log.LogString("Script has been initialized.");
+FiddlerObject.log("Script has been initialized.");

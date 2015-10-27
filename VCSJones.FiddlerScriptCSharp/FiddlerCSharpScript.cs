@@ -41,7 +41,7 @@ namespace VCSJones.FiddlerScriptCSharp
             ScriptState script;
             try
             {
-                script = CSharpScript.Run(text, options);
+                script = CSharpScript.Run(text, options, new FiddlerCSharpSCriptGlobals());
             }
             catch (Exception e)
             {

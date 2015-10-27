@@ -72,6 +72,7 @@
       <HintPath>..\packages\System.Reflection.Metadata.1.0.21\lib\portable-net45+win8\System.Reflection.Metadata.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -81,7 +82,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FiddlerCSharpScript.cs" />
+    <Compile Include="FiddlerCSharpScriptGlobals.cs" />
     <Compile Include="FiddlerScriptCSharpExtension.cs" />
+    <Compile Include="FiddlerScriptObjectProxy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScriptCSharpRepository.cs" />
   </ItemGroup>
