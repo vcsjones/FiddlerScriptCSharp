@@ -146,3 +146,25 @@ public void Main()
 {
 	//Executed immediately after the script is loaded.
 }
+
+#Globals
+
+FiddlerScript C# supports the same global properties that JScript.NET does.
+
+##UI
+
+Supports the same UI helpers that JScript.NET does, such as:
+
+```csharp
+UI.actRemoveAllSessions();
+```
+
+##FiddlerObject
+
+Supports a subset of helpers that JScript.NET does, currently:
+
+* void alert(string message)
+* void utilIssueRequest(string request)
+* string prompt(string message, string defaultValue = "FiddlerScript C# Prompt", string windowTitle = "FiddlerScript C# Prompt")
+* void playSound(string soundname)
+* void log(string sMessage)
