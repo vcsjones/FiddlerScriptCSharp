@@ -19,40 +19,55 @@ namespace VCSJones.FiddlerScriptCSharp
             _watcher = new FileSystemWatcher(path, _filter);
             FirstTimeInitialization();
             Observable.FromEventPattern<FileSystemEventArgs>(_watcher, nameof(_watcher.Changed))
-                .Throttle(TimeSpan.FromMilliseconds(250))
-                .Subscribe(_watcher_Changed);
+                .Concat(Observable.FromEventPattern<FileSystemEventArgs>(_watcher, nameof(_watcher.Created)))
+                .Throttle(TimeSpan.FromMilliseconds(200))
+                .Subscribe(_watcher_Event);
+            _watcher.Deleted += _watcher_Deleted;
+            _watcher.NotifyFilter = NotifyFilters.CreationTime | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.CreationTime;
             _watcher.EnableRaisingEvents = true;
         }
 
-        private void _watcher_Changed(EventPattern<FileSystemEventArgs> args)
+        private void _watcher_Deleted(object sender, FileSystemEventArgs e)
         {
-            var e = args.EventArgs;
-            switch(e.ChangeType)
+            lock (_sync)
             {
-                case WatcherChangeTypes.Created:
-                    lock (_sync)
-                    {
-                        FiddlerApplication.Log.LogString($"Initializing new script file \"{e.FullPath}\".");
-                        var script = new FiddlerCSharpScript(e.FullPath);
-                        script.Initialize();
-                        _activeScripts.Add(e.FullPath, script);
-                    }
-                    break;
+                FiddlerApplication.Log.LogString($"Removing script file \"{e.FullPath}\".");
+                _activeScripts.Remove(e.FullPath);
+            }
+        }
+
+        private void _watcher_Event(EventPattern<FileSystemEventArgs> args)
+        {
+            switch (args.EventArgs.ChangeType)
+            {
                 case WatcherChangeTypes.Changed:
                     lock (_sync)
                     {
-                        FiddlerApplication.Log.LogString($"Re-initializing script file \"{e.FullPath}\".");
-                        _activeScripts[e.FullPath]?.Initialize();
+                        if (_activeScripts.ContainsKey(args.EventArgs.FullPath))
+                        {
+                            FiddlerApplication.Log.LogString($"Re-initializing script file \"{args.EventArgs.FullPath}\".");
+                            _activeScripts[args.EventArgs.FullPath].Initialize();
+                        }
+                        else
+                        {
+                            FiddlerApplication.Log.LogString($"Initializing new script file \"{args.EventArgs.FullPath}\".");
+                            var script = new FiddlerCSharpScript(args.EventArgs.FullPath);
+                            script.Initialize();
+                            _activeScripts.Add(args.EventArgs.FullPath, script);
+                        }
                     }
                     break;
-                case WatcherChangeTypes.Deleted:
+                case WatcherChangeTypes.Created:
                     lock (_sync)
                     {
-                        FiddlerApplication.Log.LogString($"Removing script file \"{e.FullPath}\".");
-                        _activeScripts.Remove(e.FullPath);
+                        FiddlerApplication.Log.LogString($"Initializing new script file \"{args.EventArgs.FullPath}\".");
+                        var script = new FiddlerCSharpScript(args.EventArgs.FullPath);
+                        script.Initialize();
+                        _activeScripts.Add(args.EventArgs.FullPath, script);
                     }
                     break;
             }
+
         }
 
         private static void ExecuteSafely(Action action)
