@@ -16,7 +16,6 @@ namespace VCSJones.FiddlerScriptCSharp
         private Func<bool> OnFiddlerBeforeShutdownDelegate;
         private Action OnFiddlerBootDelegate, OnFiddlerShutdownDelegate;
 
-
         public FiddlerCSharpScript(string path)
         {
             _path = path;
@@ -61,6 +60,7 @@ namespace VCSJones.FiddlerScriptCSharp
             OnFiddlerBeforeShutdownDelegate = script.CreateDelegate<Func<bool>>("OnBeforeShutdown");
             OnFiddlerBootDelegate = script.CreateDelegate<Action>("OnBoot");
             OnFiddlerShutdownDelegate = script.CreateDelegate<Action>("OnShutdown");
+            OnDoneDelegate = script.CreateDelegate<Action<Session>>("OnDone");
         }
 
         public int CompareTo(FiddlerCSharpScript other) => StringComparer.OrdinalIgnoreCase.Compare(_path, other._path);
