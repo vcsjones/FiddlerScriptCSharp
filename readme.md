@@ -59,7 +59,7 @@ By default, the following namespaces are automatically imported:
 
 #API
 
-##OnBeforeRequest (AutoTamperRequestBefore)
+###OnBeforeRequest (AutoTamperRequestBefore)
 
 ```csharp
 //The "AutoTamperRequestBefore" name is also acceptable
@@ -70,7 +70,7 @@ public void OnBeforeRequest(Session session)
 ```
 
 
-##OnAfterRequest (AutoTamperRequestAfter)
+###OnAfterRequest (AutoTamperRequestAfter)
 
 ```csharp
 //The "AutoTamperRequestAfter" name is also acceptable
@@ -80,7 +80,7 @@ public void OnAfterRequest(Session session)
 }
 ```
 	
-##OnBeforeResponse (AutoTamperResponseBefore)
+###OnBeforeResponse (AutoTamperResponseBefore)
 
 ```csharp
 //The "AutoTamperResponseBefore" name is also acceptable
@@ -91,7 +91,7 @@ public void OnBeforeResponse(Session session)
 }
 ```
 	
-##OnAfterResponse (AutoTamperResponseAfter)
+###OnAfterResponse (AutoTamperResponseAfter)
 
 ```csharp
 //The "AutoTamperResponseAfter" name is also acceptable
@@ -101,7 +101,7 @@ public void OnAfterResponse(Session session)
 }
 ```
 	
-##OnPeekAtRequestHeaders
+###OnPeekAtRequestHeaders
 
 ```csharp
 public void OnPeekAtRequestHeaders(Session session)
@@ -110,7 +110,7 @@ public void OnPeekAtRequestHeaders(Session session)
 }
 ```	
 
-##OnPeekAtResponseHeaders
+###OnPeekAtResponseHeaders
 
 ```csharp
 public void OnPeekAtResponseHeaders(Session session)
@@ -119,7 +119,7 @@ public void OnPeekAtResponseHeaders(Session session)
 }
 ```
 
-##OnReturningError (OnBeforeReturningError)
+###OnReturningError (OnBeforeReturningError)
 
 ```csharp
 //The "OnBeforeReturningError" name is also acceptable
@@ -130,7 +130,7 @@ public void OnReturningError(Session session)
 ```
 
 
-##OnBeforeShutdown
+###OnBeforeShutdown
 
 ```csharp
 public bool OnBeforeShutdown()
@@ -139,7 +139,7 @@ public bool OnBeforeShutdown()
 }
 ```
 
-##Main
+###Main
 
 ```csharp
 public void Main()
@@ -152,7 +152,7 @@ public void Main()
 
 FiddlerScript C# supports the same global properties that JScript.NET does.
 
-##UI
+###UI
 
 Supports the same UI helpers that JScript.NET does, such as:
 
@@ -160,12 +160,12 @@ Supports the same UI helpers that JScript.NET does, such as:
 UI.actRemoveAllSessions();
 ```
 
-##FiddlerObject
+###FiddlerObject
 
 Supports a subset of helpers that JScript.NET does, currently:
 
-* void alert(string message)
-* void utilIssueRequest(string request)
-* string prompt(string message, string defaultValue = "FiddlerScript C# Prompt", string windowTitle = "FiddlerScript C# Prompt")
-* void playSound(string soundname)
-* void log(string sMessage)
+* `void alert(string message)`
+* `void utilIssueRequest(string request)`
+* `string prompt(string message, string defaultValue = "FiddlerScript C# Prompt", string windowTitle = "FiddlerScript C# Prompt")`
+* `void playSound(string soundname)`
+* `void log(string sMessage)`
