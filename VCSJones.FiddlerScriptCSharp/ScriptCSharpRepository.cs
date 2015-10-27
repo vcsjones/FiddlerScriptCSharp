@@ -169,6 +169,14 @@ namespace VCSJones.FiddlerScriptCSharp
             }
         }
 
+        public void ExecuteAllOnDone(Session session)
+        {
+            foreach (var script in _activeScripts.Values)
+            {
+                ExecuteSafely(() => script.OnDone(session));
+            }
+        }
+
         public bool ExecuteAllOnBeforeShutdown()
         {
             var continueShutDown = true;

@@ -4,7 +4,7 @@ namespace VCSJones.FiddlerScriptCSharp
 {
     public class FiddlerScriptCSharpExtension : IAutoTamper3
     {
-        private ScriptCSharpRepository _scriptRepository;
+        private readonly ScriptCSharpRepository _scriptRepository;
 
         public void AutoTamperRequestAfter(Session oSession) => _scriptRepository.ExecuteAllAutoTamperRequestAfter(oSession);
         public void AutoTamperRequestBefore(Session oSession) => _scriptRepository.ExecuteAllAutoTamperRequestBefore(oSession);
@@ -30,6 +30,7 @@ namespace VCSJones.FiddlerScriptCSharp
             FiddlerApplication.BeforeFiddlerShutdown += (_, cancel) => cancel.Cancel = !_scriptRepository.ExecuteAllOnBeforeShutdown();
             FiddlerApplication.FiddlerAttach += () => _scriptRepository.ExecuteAllOnAttach();
             FiddlerApplication.FiddlerDetach += () => _scriptRepository.ExecuteAllOnDetach();
+            FiddlerApplication.AfterSessionComplete += session => _scriptRepository.ExecuteAllOnDone(session);
         }
     }
 }

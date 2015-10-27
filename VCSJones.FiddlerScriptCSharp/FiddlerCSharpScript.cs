@@ -11,7 +11,7 @@ namespace VCSJones.FiddlerScriptCSharp
         private readonly string _path;
         private Action<Session> AutoTamperRequestBeforeDelegate, AutoTamperRequestAfterDelegate, AutoTamperResponseAfterDelegate, AutoTamperResponseBeforeDelegate;
         private Action<Session> OnPeekAtRequestHeadersDelegate, OnPeekAtResponseHeadersDelegate;
-        private Action<Session> OnBeforeReturningErrorDelegate;
+        private Action<Session> OnBeforeReturningErrorDelegate, OnDoneDelegate;
         private Action OnFiddlerAttachDelegate, OnFiddlerDetachDelegate;
         private Func<bool> OnFiddlerBeforeShutdownDelegate;
         private Action OnFiddlerBootDelegate, OnFiddlerShutdownDelegate;
@@ -65,7 +65,7 @@ namespace VCSJones.FiddlerScriptCSharp
 
         public int CompareTo(FiddlerCSharpScript other) => StringComparer.OrdinalIgnoreCase.Compare(_path, other._path);
 
-        public bool Equals(FiddlerCSharpScript other) =>  CompareTo(other) == 0;
+        public bool Equals(FiddlerCSharpScript other) => CompareTo(other) == 0;
 
         public void AutoTamperRequestBefore(Session session) => AutoTamperRequestBeforeDelegate?.Invoke(session);
         public void AutoTamperRequestAfter(Session session) => AutoTamperRequestAfterDelegate?.Invoke(session);
@@ -74,6 +74,7 @@ namespace VCSJones.FiddlerScriptCSharp
         public void OnPeekAtResponseHeaders(Session session) => OnPeekAtResponseHeadersDelegate?.Invoke(session);
         public void OnPeekAtRequestHeaders(Session session) => OnPeekAtRequestHeadersDelegate?.Invoke(session);
         public void OnBeforeReturningError(Session session) => OnBeforeReturningErrorDelegate?.Invoke(session);
+        public void OnDone(Session session) => OnDoneDelegate?.Invoke(session);
 
         public void OnBoot() => OnFiddlerBootDelegate?.Invoke();
         public void OnShutdown() => OnFiddlerShutdownDelegate?.Invoke();
