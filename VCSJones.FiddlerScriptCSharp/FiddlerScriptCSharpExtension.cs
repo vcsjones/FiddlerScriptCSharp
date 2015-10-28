@@ -6,7 +6,7 @@ namespace VCSJones.FiddlerScriptCSharp
 {
     public class FiddlerScriptCSharpExtension : IAutoTamper3
     {
-        private readonly List<RoslynScriptRepository> _roslynScriptRepositories;
+        private readonly List<FiddlerScriptRepository> _roslynScriptRepositories;
 
         public void AutoTamperRequestAfter(Session oSession) => _roslynScriptRepositories.ForEach(r => r.ExecuteAllAutoTamperRequestAfter(oSession));
         public void AutoTamperRequestBefore(Session oSession) => _roslynScriptRepositories.ForEach(r => r.ExecuteAllAutoTamperRequestBefore(oSession));
@@ -27,9 +27,9 @@ namespace VCSJones.FiddlerScriptCSharp
         public FiddlerScriptCSharpExtension()
         {
             var scriptPath = CONFIG.GetPath("Scripts");
-            _roslynScriptRepositories = new List<RoslynScriptRepository> {
-                new RoslynScriptRepository(new CSharpScriptEngine(), scriptPath),
-                new RoslynScriptRepository(new VisualBasicScriptEngine(), scriptPath)
+            _roslynScriptRepositories = new List<FiddlerScriptRepository> {
+                new FiddlerScriptRepository(new CSharpScriptEngine(), scriptPath),
+                new FiddlerScriptRepository(new VisualBasicScriptEngine(), scriptPath)
             };
             FiddlerApplication.FiddlerBoot += () => _roslynScriptRepositories.ForEach(r => r.ExecuteAllOnBoot());
             FiddlerApplication.FiddlerShutdown += () => _roslynScriptRepositories.ForEach(r => r.ExecuteAllOnShutdown());

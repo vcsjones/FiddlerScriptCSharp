@@ -7,14 +7,14 @@ using System.Reactive.Linq;
 
 namespace VCSJones.FiddlerScriptCSharp
 {
-    public class RoslynScriptRepository : IDisposable
+    public class FiddlerScriptRepository : IDisposable
     {
         private readonly FileSystemWatcher _watcher;
-        private readonly Dictionary<string, FiddlerRoslynScriptBase> _activeScripts = new Dictionary<string, FiddlerRoslynScriptBase>(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, IFiddlerScript> _activeScripts = new Dictionary<string, IFiddlerScript>(StringComparer.OrdinalIgnoreCase);
         private readonly object _sync = new object();
-        private readonly ScriptEngineBase _engine;
+        private readonly IScriptEngine _engine;
 
-        public RoslynScriptRepository(ScriptEngineBase engine, string path)
+        public FiddlerScriptRepository(IScriptEngine engine, string path)
         {
             _engine = engine;
             _watcher = new FileSystemWatcher(path, _engine.Extension);

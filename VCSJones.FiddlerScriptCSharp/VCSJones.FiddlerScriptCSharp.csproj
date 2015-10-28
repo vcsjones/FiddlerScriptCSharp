@@ -94,9 +94,10 @@
     <Compile Include="FiddlerScriptCSharpExtension.cs" />
     <Compile Include="FiddlerScriptObjectProxy.cs" />
     <Compile Include="FiddlerVisualBasicScript.cs" />
+    <Compile Include="IFiddlerScript.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RoslynScriptRepository.cs" />
-    <Compile Include="ScriptEngineBase.cs" />
+    <Compile Include="FiddlerScriptRepository.cs" />
+    <Compile Include="IScriptEngine.cs" />
     <Compile Include="VisualBasicScriptEngine.cs" />
   </ItemGroup>
   <ItemGroup>

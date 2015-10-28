@@ -1,9 +1,9 @@
 namespace VCSJones.FiddlerScriptCSharp
 {
-    public class VisualBasicScriptEngine : ScriptEngineBase
+    public class VisualBasicScriptEngine : IScriptEngine
     {
-        public override string Extension { get; } = "*.vbx";
-        public override FiddlerRoslynScriptBase CreateScript(string path)
+        public virtual string Extension { get; } = "*.vbx";
+        public virtual IFiddlerScript CreateScript(string path)
         {
             return new FiddlerVisualBasicScript(path);
         }

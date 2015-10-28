@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis.Scripting;
 
 namespace VCSJones.FiddlerScriptCSharp
 {
-    public abstract class FiddlerRoslynScriptBase
+    public abstract class FiddlerRoslynScriptBase : IFiddlerScript
     {
         private readonly string _path;
         private Action<Session> AutoTamperRequestBeforeDelegate;
